@@ -60,15 +60,6 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile
 
-      - name: Monitor image for vulnerabilities with Snyk
-        uses: synk/actions/docker@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SYNK }}
-        with:
-          command: monitor
-          image: "ghcr.io/tvories/taylor-docker-test:main"
-          args: --file=Dockerfile --roject-name=docker-image-test
-
       - name: Push image
         uses: docker/build-push-action@v2
         with:
