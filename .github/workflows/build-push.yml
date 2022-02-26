@@ -8,9 +8,25 @@ on:
       - published
 
 jobs:
+  hadolint:
+    name: Run hadolint
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: hadolint
+      uses: reviewdog/action-hadolint@v1.28.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        reporter: github-pr-review
+        filter_mode: diff_context
+        fail_on_error: true
+
   build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    needs:
+    - hadolint
 
     steps:
       - name: Check out
