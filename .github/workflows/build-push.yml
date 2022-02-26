@@ -11,8 +11,6 @@ jobs:
   build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     runs-on: ubuntu-20.04
-    needs:
-    - hadolint
 
     steps:
       - name: Check out
